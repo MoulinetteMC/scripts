@@ -2,6 +2,13 @@
 prismdir=~/.local/share/PrismLauncher
 savedir=~/afs/.moulinettemc
 
+echo $1
+echo $2
+echo $3
+echo $4
+
+read -p "Enter your pseudo: " account
+
 [[ ! -d $prismdir ]] && mkdir $prismdir
 [[ ! -d $savedir ]] && mkdir $savedir
 
@@ -32,8 +39,6 @@ mv $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
    mkdir /instances/MoulinetteMC/.minecraft/xaero/world-map/Multiplayer_valentinkh.ddns.net/ &&
    cp -r $savedir/xaero/world-map/ \
       $prismdir/instances/MoulinetteMC/.minecraft/xaero/world-map/Multiplayer_valentinkh.ddns.net/
-
-read -p "Enter your pseudo: " account
 
 nix-shell -p prismlauncher --command "prismlauncher -l MoulinetteMC -a $account"
 
