@@ -2,10 +2,8 @@
 prismdir=~/.local/share/PrismLauncher
 savedir=~/afs/.moulinettemc
 
-echo $1
-echo $2
-echo $3
-echo $4
+exec 3>&1
+exec 1>& /dev/null
 
 read -p "Enter your pseudo: " account
 
@@ -15,10 +13,10 @@ read -p "Enter your pseudo: " account
 if wget https://github.com/MoulinetteMC/MoulinetteMC/archive/refs/heads/main.zip; then 
    unzip ./main.zip -d "$prismdir/instances/"
 else 
-   echo "Failed to download instance"
+   echo "\033[31mFailed to download instance\033[0m"
+   mv $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
+   pause
 fi
-
-mv $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
 
 [[ -f "$savedir/accounts.json" ]] &&
    cp $savedir/accounts.json $prismdir
