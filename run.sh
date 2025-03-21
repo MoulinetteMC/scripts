@@ -1,28 +1,25 @@
 #!/usr/bin/env bash
 prismdir=~/.local/share/PrismLauncher
-savedir=~/afs/.moulinettemc
+savedir=~/afs/.moulinettem
 
-exec 3>&1
-exec 1>& /dev/null
-
-echo "Enter your pseudo:" >&3
+echo "Enter your pseudo:"
 read account
-echo >&3
+echo
 
 [[ ! -d $prismdir ]] && mkdir $prismdir
 [[ ! -d $savedir ]] && mkdir $savedir
 
-echo "Downloading gamefiles..." >&3
+echo "\033[32mDownloading gamefiles...\033[0m"
 if wget https://github.com/MoulinetteMC/MoulinetteMC/archive/refs/heads/main.zip; then 
-   echo "Decompressing gamefiles..." >&3
+   echo "\033[32mDecompressing gamefiles...\033[0m"
    unzip ./main.zip -d "$prismdir/instances/"
    mv $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
 else 
-   echo "\033[31mFailed to download instance\033[0m" >&3
+   echo "\033[31mFailed to download instance\033[0m"
    pause
 fi
 
-echo "Import player's settings..." >&3
+echo "\033[32mImport player's settings...\033[0m"
 [[ -f "$savedir/accounts.json" ]] &&
    cp $savedir/accounts.json $prismdir
 
@@ -45,7 +42,7 @@ echo "Import player's settings..." >&3
 
 nix-shell -p prismlauncher --command "prismlauncher -l MoulinetteMC -a $account"
 
-echo "Export player's settings..." >&3
+echo "\033[32mExport player's settings...\033[0m"
 [[ -f "$prismdir/accounts.json" ]] &&
    cp $prismdir/accounts.json $savedir/accounts.json
 
