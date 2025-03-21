@@ -5,19 +5,24 @@ savedir=~/afs/.moulinettemc
 exec 3>&1
 exec 1>& /dev/null
 
-read -p "Enter your pseudo: " account
+echo "Enter your pseudo:" >&3
+read account
+echo >&3
 
 [[ ! -d $prismdir ]] && mkdir $prismdir
 [[ ! -d $savedir ]] && mkdir $savedir
 
+echo "Downloading gamefiles..." >&3
 if wget https://github.com/MoulinetteMC/MoulinetteMC/archive/refs/heads/main.zip; then 
+   echo "Decompressing gamefiles..." >&3
    unzip ./main.zip -d "$prismdir/instances/"
-else 
-   echo "\033[31mFailed to download instance\033[0m"
    mv $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
+else 
+   echo "\033[31mFailed to download instance\033[0m" >&3
    pause
 fi
 
+echo "Import player's settings..." >&3
 [[ -f "$savedir/accounts.json" ]] &&
    cp $savedir/accounts.json $prismdir
 
@@ -40,6 +45,7 @@ fi
 
 nix-shell -p prismlauncher --command "prismlauncher -l MoulinetteMC -a $account"
 
+echo "Export player's settings..." >&3
 [[ -f "$prismdir/accounts.json" ]] &&
    cp $prismdir/accounts.json $savedir/accounts.json
 
