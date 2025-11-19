@@ -10,7 +10,7 @@ echo
 [[ ! -d $savedir ]] && mkdir $savedir
 
 echo -e "\033[32mDownloading gamefiles...\033[0m"
-if wget https://github.com/MoulinetteMC/MoulinetteMC/archive/refs/heads/main.zip; then 
+if curl -O https://github.com/MoulinetteMC/MoulinetteMC/archive/refs/heads/main.zip; then 
    echo -e "\033[32mDecompressing gamefiles...\033[0m"
    unzip ./main.zip -d "$prismdir/instances/"
    mv -f $prismdir/instances/MoulinetteMC-main/ $prismdir/instances/MoulinetteMC/
